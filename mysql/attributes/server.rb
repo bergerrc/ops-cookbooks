@@ -65,6 +65,7 @@ when 'debian','ubuntu'
   set[:mysql][:socket]                   = '/var/run/mysqld/mysqld.sock'
   set[:mysql][:pid_file]                 = '/var/run/mysqld/mysqld.pid'
   set[:mysql][:grants_path]              = '/etc/mysql/grants.sql'
+  set[:mysql][:log_error]                = '/var/log/mysqld.log'
 end
 
 if infrastructure_class?('ec2')
