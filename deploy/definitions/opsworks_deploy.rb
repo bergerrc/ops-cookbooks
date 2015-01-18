@@ -2,8 +2,6 @@ define :opsworks_deploy do
   application = params[:app]
   deploy = params[:deploy_data]
 
-Chef::Log.info("Deploy to: #{deploy[:deploy_to]} using SCM: #{deploy[:scm][:scm_type]}")
-
   directory "#{deploy[:deploy_to]}" do
     group deploy[:group]
     owner deploy[:user]
