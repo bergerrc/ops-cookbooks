@@ -9,6 +9,12 @@ node[:deploy].each do |application, deploy|
   if !deploy[:scm].nil?
     Chef::Log.info("scm: #{deploy[:scm][:scm_type]}")
   end
+  if !deploy[:domains].nil?
+    deploy[:domains].each do |d|
+      Chef::Log.info("domain: #{d}")
+    end 
+  end
+  
   
   opsworks_deploy_dir do
     user deploy[:user]
