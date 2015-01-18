@@ -2,6 +2,11 @@ include_recipe 'deploy'
 include_recipe "nginx::service"
 
 node[:deploy].each do |application, deploy|
+  if deploy[:application_type] != 'static' && deploy[:application_type] != 'php'
+    Chef::Log.debug("Skipping deploy::web application #{application} as it is not an static HTML or PHP app.")
+    next
+  end
+  
   Chef::Log.info("deploying application #{application}")
   Chef::Log.info("path #{deploy[:deploy_to]}")
   Chef::Log.info("user #{deploy[:user]}")
