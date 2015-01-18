@@ -1,10 +1,14 @@
 include_recipe 'deploy'
 include_recipe "nginx::service"
 
-Chef::Log.info("deploy::web application #{application}")
+
 
 node[:deploy].each do |application, deploy|
-
+  Chef::Log.info("deploying application #{application}")
+  Chef::Log.info("path #{deploy[:deploy_to]}")
+  Chef::Log.info("user #{deploy[:user]}")
+  Chef::Log.info("group #{deploy[:group]}")
+  
   opsworks_deploy_dir do
     user deploy[:user]
     group deploy[:group]
