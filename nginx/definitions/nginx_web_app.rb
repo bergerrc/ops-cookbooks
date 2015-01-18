@@ -30,7 +30,7 @@ define :nginx_web_app, :template => "site.erb", :enable => true do
     mode 0600
   end
 
-  template "#{node[:nginx][:dir]}/ssl/#{application[:domains].first}.crt" do
+  template "#{node[:nginx][:dir]}/ssl/#{application[:domains][0]}.crt" do
     cookbook 'nginx'
     mode '0600'
     source "ssl.key.erb"
@@ -41,7 +41,7 @@ define :nginx_web_app, :template => "site.erb", :enable => true do
     end
   end
 
-  template "#{node[:nginx][:dir]}/ssl/#{application[:domains].first}.key" do
+  template "#{node[:nginx][:dir]}/ssl/#{application[:domains][0]}.key" do
     cookbook 'nginx'
     mode '0600'
     source "ssl.key.erb"
@@ -53,7 +53,7 @@ define :nginx_web_app, :template => "site.erb", :enable => true do
   end
   
   
-  template "#{node[:nginx][:dir]}/ssl/#{application[:domains].first}.ca" do
+  template "#{node[:nginx][:dir]}/ssl/#{application[:domains][0]}.ca" do
     cookbook 'nginx'
     mode '0600'
     source "ssl.key.erb"
