@@ -1,5 +1,5 @@
 define :magento_config do
-  application = params[:app]
+  application = params[:application]
   deploy = params[:deploy_data]
 
 execute "ensure correct permissions for install magento /media /var" do
