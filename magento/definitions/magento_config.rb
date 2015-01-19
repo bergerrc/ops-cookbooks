@@ -3,16 +3,16 @@ define :magento_config do
   deploy = params[:deploy_data]
 
 execute "ensure correct permissions for install magento /media /var" do
-  command "chmod -R o+w #{deploy[:deploy_to]}/media #{deploy[:deploy_to]}/var"
+  command "chmod -R o+w #{application[:deploy_to]}/media #{application[:deploy_to]}/var"
   only_if do
-    ::File.exists?("#{deploy[:deploy_to]}/media")
+    ::File.exists?("#{application[:deploy_to]}/media")
   end
 end
 
-execute "ensure correct permissions for install magento #{deploy[:deploy_to]}/var/.htaccess #{deploy[:deploy_to]}/app/etc" do
-  command "chmod o+w #{deploy[:deploy_to]}/app/etc #{deploy[:deploy_to]}/var/.htaccess"
+execute "ensure correct permissions for install magento #{application[:deploy_to]}/var/.htaccess #{application[:deploy_to]}/app/etc" do
+  command "chmod o+w #{application[:deploy_to]}/app/etc #{application[:deploy_to]}/var/.htaccess"
   only_if do
-    ::File.exists?("#{deploy[:deploy_to]}/app/etc")
+    ::File.exists?("#{application[:deploy_to]}/app/etc")
   end
 end
     
