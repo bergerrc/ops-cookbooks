@@ -14,7 +14,7 @@ node[:deploy].each do |application, deploy|
   
   # write out local.xml
   template "#{deploy[:deploy_to]}/app/etc/local.xml" do
-    cookbook 'php'
+    cookbook 'magento'
     source 'local.erb'
     mode '0660'
     owner deploy[:user]
