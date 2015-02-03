@@ -75,8 +75,8 @@ define :nginx_web_app, :template => "site.erb", :enable => true do
     cookbook 'nginx'
     source 'drop.erb'
     mode '0660'
-    owner deploy[:user]
-    group deploy[:group]
+    owner "root"
+    group "root"
     if File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{application_name}")
       notifies :reload, "service[nginx]", :delayed
     end
