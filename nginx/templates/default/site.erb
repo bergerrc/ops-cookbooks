@@ -6,10 +6,11 @@ server {
 	location / {
 		root   <%= @application[:absolute_document_root] %>;
 		index  index.html index.htm index.php;
-		try_files $uri $uri/ @handler; 
-		expires 30d; 
+		try_files $uri $uri/ @handler; ## If missing pass the URI to Magento's front handler
+		expires 30d; ## Assume all files are cachable
 	}
     
+	## These locations would be hidden by .htaccess normally
     location /app/                { deny all; }
     location /includes/           { deny all; }
     location /lib/                { deny all; }
@@ -17,44 +18,47 @@ server {
     location /pkginfo/            { deny all; }
     location /report/config.xml   { deny all; }
     location /var/                { deny all; }
+    ##location /api/soap/           { allow all; }
  
-    location /var/export/ {
-        auth_basic           "Restricted";
-        auth_basic_user_file htpasswd; 
+    location /var/export/ { ## Allow admins only to view export folder
+        auth_basic           "Restricted"; ## Message shown in login window
+        auth_basic_user_file htpasswd; ## See /etc/nginx/htpassword
         autoindex            on;
     }
 
-    location  /. {
+    location  /. { ## Disable .htaccess and other hidden files
         return 404;
     }
  
-    location @handler { 
+    location @handler { ## Magento uses a common front handler
         rewrite / /index.php;
     }
  
-    location ~ .php/ { 
+    location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
         rewrite ^(.*.php)/ $1 last;
     }
 
-    location ~ .php$ { 
-        if (!-e $request_filename) { rewrite / /index.php last; } 
+    location ~ .php$ { ## Execute PHP scripts
+        if (!-e $request_filename) { rewrite / /index.php last; } ## Catch 404s that try_files miss
  
-        expires        off; 
+        expires        off; ## Do not cache dynamic content
         fastcgi_pass   127.0.0.1:9000;
         fastcgi_param  HTTPS $fastcgi_https;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         fastcgi_param  MAGE_RUN_CODE feiraodaarte; 
         fastcgi_param  MAGE_RUN_TYPE website;
-        include        fastcgi_params; 
+        include        fastcgi_params; ## See /etc/nginx/fastcgi_params
         error_page 500 502 504 /errors/report.php;
 	 error_page 404 /errors/404.php;
 	 error_page 503 /errors/503.php;
     }
   
+  # Block all svn access
   if ($request_uri ~* ^.*\.svn.*$) {
      return 404;
   }
-
+  
+  # Block all git access
   if ($request_uri ~* ^.*\.git.*$) {
      return 404;
   }
@@ -65,6 +69,6 @@ server {
     allow 127.0.0.1;
     deny all;
   }
-
+  
+  include	  drop.conf;
 }
-
