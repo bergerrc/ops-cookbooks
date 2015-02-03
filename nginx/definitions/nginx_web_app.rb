@@ -70,6 +70,17 @@ define :nginx_web_app, :template => "site.erb", :enable => true do
       File.exists?("#{node[:nginx][:dir]}/sites-enabled/default")
     end
   end
+  
+  template "#{node[:nginx][:dir]}/drop.conf" do
+    cookbook 'nginx'
+    source 'drop.erb'
+    mode '0660'
+    owner deploy[:user]
+    group deploy[:group]
+    if File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{application_name}")
+      notifies :reload, "service[nginx]", :delayed
+    end
+  end
 
   if params[:enable]
     execute "nxensite #{application_name}" do
