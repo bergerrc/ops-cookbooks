@@ -3,7 +3,7 @@ define :magento_config do
   deploy = params[:deploy]
 
 Chef::Log.info("installing #{application}")
-Chef::Log.info("path #{deploy[:deploy_to]}")
+Chef::Log.info("path #{application[:deploy_to]}")
 
 execute "ensure correct permissions for install magento /media /var" do
   command "chmod -R o+w #{application[:deploy_to]}/media #{application[:deploy_to]}/var"
