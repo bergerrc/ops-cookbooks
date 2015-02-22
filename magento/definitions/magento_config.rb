@@ -26,8 +26,8 @@ if platform?('centos','redhat','fedora','amazon')
 --locale \"#{node[:magento][:locale]}\" \
 --timezone \"#{node[:magento][:timezone]}\" \
 --default_currency \"#{node[:magento][:currency]}\" \
---db_host \"#{node[:database][:host]}\" \
---db_name \"#{node[:database][:database]}\" \
+--db_host \"#{application[:database][:host]}\" \
+--db_name \"#{application[:database][:database]}\" \
 --db_user \"#{node[:magento][:db_username]}\" \
 --db_pass \"#{node[:magento][:db_password]}\" \
 --url \"#{node[:magento][:url]}\" \
