@@ -3,6 +3,9 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug("Skipping php::configure application #{application} as it is not an PHP app")
     next
   end
+  if deploy[:database][:host] = nil
+    deploy[:database][:host] = 'localhost'
+  end
 
   Chef::Log.info("installing #{application}")
   Chef::Log.info("path #{deploy[:deploy_to]}")
