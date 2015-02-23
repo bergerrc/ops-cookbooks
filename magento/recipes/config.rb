@@ -13,7 +13,7 @@ node[:deploy].each do |application, deploy|
   end
   
   # write out local.xml
-  template "#{deploy[:deploy_to]}/app/etc/local.xml" do
+  template "#{application[:current_path]}/app/etc/local.xml" do
     cookbook 'magento'
     source 'local.erb'
     mode '0660'
@@ -24,7 +24,7 @@ node[:deploy].each do |application, deploy|
 	  :magento => node[:magento]
     )
     only_if do
-      File.exists?("#{deploy[:deploy_to]}/app/etc")
+      File.exists?("#{application[:current_path]}/app/etc")
     end
   end
 end
