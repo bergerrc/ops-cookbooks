@@ -3,19 +3,19 @@ define :magento_config do
   deploy = params[:deploy]
 
 Chef::Log.info("installing #{application}")
-Chef::Log.info("path #{application[:deploy_to]}")
+Chef::Log.info("path #{application[:current_path]}")
 
 execute "ensure correct permissions for install magento /media /var" do
-  command "chmod -R o+w #{application[:deploy_to]}/media #{application[:deploy_to]}/var"
+  command "chmod -R o+w #{application[:current_path]}/media #{application[:current_path]}/var"
   only_if do
-    ::File.exists?("#{application[:deploy_to]}/media")
+    ::File.exists?("#{application[:current_path]}/media")
   end
 end
 
-execute "ensure correct permissions for install magento #{application[:deploy_to]}/var/.htaccess #{application[:deploy_to]}/app/etc" do
-  command "chmod o+w #{application[:deploy_to]}/app/etc #{application[:deploy_to]}/var/.htaccess"
+execute "ensure correct permissions for install magento #{application[:current_path]}/var/.htaccess #{application[:current_path]}/app/etc" do
+  command "chmod o+w #{application[:current_path]}/app/etc #{application[:current_path]}/var/.htaccess"
   only_if do
-    ::File.exists?("#{application[:deploy_to]}/app/etc")
+    ::File.exists?("#{application[:current_path]}/app/etc")
   end
 end
     
