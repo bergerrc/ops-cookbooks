@@ -3,7 +3,7 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug("Skipping php::configure application #{application} as it is not an PHP app")
     next
   end
-  if deploy[:database][:host].nil
+  if deploy[:database][:host].nil?
     deploy[:database][:host] = 'localhost'
   end
 
