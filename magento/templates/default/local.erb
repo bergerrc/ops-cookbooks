@@ -40,10 +40,10 @@
             </db>
             <default_setup>
                 <connection>
-                    <host><%= @database[:host] %></host>
+                    <host><%= default[:database][:host] %></host>
                     <username><%= default[:magento][:db_username] %></username>
                     <password><%= default[:magento][:db_password] %></password>
-                    <dbname><%= @database[:database] %></dbname>
+                    <dbname><%= deploy[:database][:database] %></dbname>
                     <initStatements>SET NAMES utf8</initStatements>
                     <model>mysql4</model>
                     <active>1</active>
