@@ -28,22 +28,22 @@
 <config>
     <global>
         <install>
-            <date><%= magento[:install_date] %></date>
+            <date><%= @magento[:install_date] %></date>
         </install>
         <crypt>
-            <key><%= magento[:crypt_key] %></key>
+            <key><%= @magento[:crypt_key] %></key>
         </crypt>
         <disable_local_modules>false</disable_local_modules>
         <resources>
             <db>
-                <table_prefix><%= deploy[:magento][:table_prefix] %></table_prefix>
+                <table_prefix><%= @magento[:table_prefix] %></table_prefix>
             </db>
             <default_setup>
                 <connection>
-                    <host><%= deploy[:database][:host] %></host>
-                    <username><%= deploy[:magento][:db_username] %></username>
-                    <password><%= deploy[:magento][:db_password] %></password>
-                    <dbname><%= deploy[:database][:database] %></dbname>
+                    <host><%= @database[:host] %></host>
+                    <username><%= @magento[:db_username] %></username>
+                    <password><%= @magento[:db_password] %></password>
+                    <dbname><%= @database[:database] %></dbname>
                     <initStatements>SET NAMES utf8</initStatements>
                     <model>mysql4</model>
                     <active>1</active>
