@@ -24,9 +24,6 @@ template "#{application[:current_path]}/app/etc/local.xml" do
       :database => deploy[:database],
 	  :magento => node[:magento]
     )
-    only_if do
-      File.exists?("#{application[:current_path]}/app/etc")
-    end
 end
 
 end
