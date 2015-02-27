@@ -24,7 +24,7 @@
  * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
--->
+
 <config>
     <global>
         <install>
@@ -43,7 +43,7 @@
                     <host><%= default[:database][:host] %></host>
                     <username><%= default[:magento][:db_username] %></username>
                     <password><%= default[:magento][:db_password] %></password>
-                    <dbname><%= deploy[:database][:database] %></dbname>
+                    <dbname><%= default[:database][:database] %></dbname>
                     <initStatements>SET NAMES utf8</initStatements>
                     <model>mysql4</model>
                     <active>1</active>
@@ -70,3 +70,4 @@
         </routers>
     </admin>
 </config>
+-->
