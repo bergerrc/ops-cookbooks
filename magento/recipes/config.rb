@@ -6,19 +6,20 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("installing #{application}")
   Chef::Log.info("path #{deploy[:deploy_to]}")
+  Chef::Log.info("deploy1 #{node[:deploy]}")
+  Chef::Log.info("deploy2 #{deploy}")
   
   magento_config application do
     application deploy
     cookbook "magento"
   end
-  
-  # write out local.xml
-  template "#{application[:current_path]}/app/etc/local.xml" do
-    cookbook 'magento'
-    source 'local.erb'
-    mode '0660'
-    owner deploy[:user]
-    group deploy[:group]
+
+# write out local.xml  
+template "#{application[:current_path]}/app/etc/local.xml" do
+  source "source.erb"
+  owner deploy[:user]
+  group deploy[:group]
+  mode 0660
     variables(
       :database => deploy[:database],
 	  :magento => node[:magento]
@@ -26,5 +27,6 @@ node[:deploy].each do |application, deploy|
     only_if do
       File.exists?("#{application[:current_path]}/app/etc")
     end
-  end
+end
+
 end
