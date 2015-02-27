@@ -16,7 +16,7 @@ node[:deploy].each do |application, deploy|
 
 # write out local.xml  
 template "#{deploy[:current_path]}/app/etc/local.xml" do
-  source "source.erb"
+  source "local.erb"
   owner "root"
   group "root"
   mode 0660
