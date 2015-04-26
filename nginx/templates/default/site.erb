@@ -18,7 +18,7 @@ server {
     location /pkginfo/            { deny all; }
     location /report/config.xml   { deny all; }
     location /var/                { deny all; }
-    ##location /api/soap/           { allow all; }
+    location /api/soap/           { allow all; }
  
     location /var/export/ { ## Allow admins only to view export folder
         auth_basic           "Restricted"; ## Message shown in login window
@@ -38,21 +38,22 @@ server {
         rewrite ^(.*.php)/ $1 last;
     }
 
-    location ~ .php$ { ## Execute PHP scripts
+    location ~ \.php$ {
+        root   <%= @application[:absolute_document_root] %>;
         if (!-e $request_filename) { rewrite / /index.php last; } ## Catch 404s that try_files miss
- 
-        expires        off; ## Do not cache dynamic content
+
         fastcgi_pass   127.0.0.1:9000;
-        fastcgi_param  HTTPS $fastcgi_https;
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        expires        off; 
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params; 
+        error_page 500 502 504 /errors/report.php;
+	error_page 404 /errors/404.php;
+	error_page 503 /errors/503.php;
         fastcgi_param  MAGE_RUN_CODE default; 
         fastcgi_param  MAGE_RUN_TYPE store;
-        include        fastcgi_params; ## See /etc/nginx/fastcgi_params
-        error_page 500 502 504 /errors/report.php;
-	 error_page 404 /errors/404.php;
-	 error_page 503 /errors/503.php;
+        fastcgi_param  HTTPS $fastcgi_https;
     }
-  
+    
   # Block all svn access
   if ($request_uri ~* ^.*\.svn.*$) {
      return 404;
@@ -68,5 +69,12 @@ server {
     access_log off;
     allow 127.0.0.1;
     deny all;
+  }
+  
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+  location ~ /\.ht {
+    deny  all;
   }
 }
