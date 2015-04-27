@@ -21,8 +21,6 @@ while root_pw.length < 20
   root_pw << OpenSSL::Random.random_bytes(1).gsub(/\W/, '')
 end
 
-Chef::Log.info("Setting up the MySQL server_root_password:" && root_pw)
-
 default[:mysql][:server_root_password] = root_pw
 
 debian_pw = String.new
