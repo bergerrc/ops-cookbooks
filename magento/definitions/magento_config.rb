@@ -21,7 +21,7 @@ end
     
 if platform?('centos','redhat','fedora','amazon')
   execute 'Run install script of magento' do
-    command "php -f install.php -- \
+    command "php -f #{application[:current_path]}/install.php -- \
 --license_agreement_accepted \"yes\" \
 --locale \"#{node[:magento][:locale]}\" \
 --timezone \"#{node[:magento][:timezone]}\" \
