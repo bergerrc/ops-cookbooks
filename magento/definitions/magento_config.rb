@@ -6,14 +6,14 @@ Chef::Log.info("installing #{application}")
 Chef::Log.info("path #{application[:current_path]}")
 
 execute "ensure correct permissions for install magento /media /var" do
-  command "chmod -R o+w #{application[:current_path]}/media #{application[:current_path]}/var"
+  command "chmod -R g+w #{application[:current_path]}/media #{application[:current_path]}/var"
   only_if do
     ::File.exists?("#{application[:current_path]}/media")
   end
 end
 
 execute "ensure correct permissions for install magento #{application[:current_path]}/var/.htaccess #{application[:current_path]}/app/etc" do
-  command "chmod o+w #{application[:current_path]}/app/etc #{application[:current_path]}/var/.htaccess"
+  command "chmod g+w #{application[:current_path]}/app/etc #{application[:current_path]}/var/.htaccess"
   only_if do
     ::File.exists?("#{application[:current_path]}/app/etc")
   end
