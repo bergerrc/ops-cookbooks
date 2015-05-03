@@ -15,15 +15,15 @@ node[:deploy].each do |application, deploy|
   end
 
 # write out local.xml  
-template "#{deploy[:current_path]}/app/etc/local.xml" do
-  source "local.erb"
-  owner "root"
-  group "root"
-  mode 0660
-    variables(
-      :database => deploy[:database],
-      :magento => node[:magento]
-    )
-end
+#template "#{deploy[:current_path]}/app/etc/local.xml" do
+#  source "local.erb"
+#  owner "root"
+#  group "root"
+#  mode 0660
+#    variables(
+#      :database => deploy[:database],
+#      :magento => node[:magento]
+#    )
+#end
 
 end
