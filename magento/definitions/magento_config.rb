@@ -69,7 +69,8 @@ if platform?('centos','redhat','fedora','amazon')
     action :run
     group application[:group]
     user application[:group]
-    only_if "/usr/bin/mysql -u #{node[:magento][:db_username]} -p'#{node[:magento][:db_password]}' -e 'show databases;'"
+    creates "#{application[:current_path]}/app/etc/local.xml"
+    #only_if "/usr/bin/mysql -u #{node[:magento][:db_username]} -p'#{node[:magento][:db_password]}' -e 'show databases;'"
   end
 end
 
