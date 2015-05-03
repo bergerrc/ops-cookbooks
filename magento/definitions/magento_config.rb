@@ -5,6 +5,30 @@ define :magento_config do
 Chef::Log.info("installing #{application}")
 Chef::Log.info("path #{application[:current_path]}")
 
+  directory "#{application[:current_path]}/var" do
+    group deploy[:group]
+    owner deploy[:user]
+    mode "0775"
+    action :create
+    recursive true
+  end
+  
+  directory "#{application[:current_path]}/var/cache" do
+    group deploy[:group]
+    owner deploy[:user]
+    mode "0775"
+    action :create
+    recursive true
+  end
+  
+  directory "#{application[:current_path]}/var/session" do
+    group deploy[:group]
+    owner deploy[:user]
+    mode "0775"
+    action :create
+    recursive true
+  end
+
 execute "ensure correct permissions for install magento /media /var" do
   command "chmod -R g+w #{application[:current_path]}/media #{application[:current_path]}/var"
   only_if do
