@@ -6,24 +6,24 @@ Chef::Log.info("installing #{application}")
 Chef::Log.info("path #{application[:current_path]}")
 
   directory "#{application[:current_path]}/var" do
-    group deploy[:group]
-    owner deploy[:user]
+    group application[:group]
+    owner application[:user]
     mode "0775"
     action :create
     recursive true
   end
   
   directory "#{application[:current_path]}/var/cache" do
-    group deploy[:group]
-    owner deploy[:user]
+    group application[:group]
+    owner application[:user]
     mode "0775"
     action :create
     recursive true
   end
   
   directory "#{application[:current_path]}/var/session" do
-    group deploy[:group]
-    owner deploy[:user]
+    group application[:group]
+    owner application[:user]
     mode "0775"
     action :create
     recursive true
