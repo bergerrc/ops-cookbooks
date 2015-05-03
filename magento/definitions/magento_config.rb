@@ -30,7 +30,7 @@ if platform?('centos','redhat','fedora','amazon')
 --db_name \"#{application[:database][:database]}\" \
 --db_user \"#{node[:magento][:db_username]}\" \
 --db_pass \"#{node[:magento][:db_password]}\" \
---db_prefix \"#{application[:application]}\_" \
+--db_prefix \"#{node[:database][:db_prefix]}\" \
 --url \"#{node[:magento][:url]}\" \
 --skip_url_validation \"yes\" \
 --use_rewrites \"yes\" \
