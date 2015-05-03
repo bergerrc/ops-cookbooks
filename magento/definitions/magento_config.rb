@@ -68,7 +68,7 @@ if platform?('centos','redhat','fedora','amazon')
 --admin_password \"#{node[:magento][:admin_password]}\""
     action :run
     group application[:group]
-    user application[:user]
+    user application[:group]
     only_if "/usr/bin/mysql -u #{node[:magento][:db_username]} -p'#{node[:magento][:db_password]}' -e 'show databases;'"
   end
 end
