@@ -34,7 +34,7 @@ service 'mysql' do
   action :stop
 end
 
-#include_recipe 'mysql::ebs' if infrastructure_class?('ec2')
+include_recipe 'mysql::ebs' if infrastructure_class?('ec2')
 include_recipe 'mysql::config'
 
 service 'mysql' do
@@ -42,8 +42,6 @@ service 'mysql' do
 end
 
 if platform?('centos','redhat','fedora','amazon')
-  Chef::Log.info("Setting up the MySQL server_root_password: #{node[:mysql][:server_root_password]}")
-  
   execute 'assign root password' do
     command "/usr/bin/mysqladmin -u root password \"#{node[:mysql][:server_root_password]}\""
     action :run
